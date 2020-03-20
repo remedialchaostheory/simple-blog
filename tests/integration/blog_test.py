@@ -11,13 +11,6 @@ class BlogTest(TestCase):
         self.assertEqual(b.posts[0].title, 'Test Post')
         self.assertEqual(b.posts[0].content, 'Test content')
 
-    def test_json(self):
-        b = Blog('Test', 'Test Author')
-
-        expected = {'title': 'Test', 'author': 'Test Author', 'posts': []}
-
-        self.assertDictEqual(b.json(), expected)
-
     def test_json_multiple_posts(self):
         b = Blog('Test', 'Test Author')
         b.create_post('Test Title', 'Test')
