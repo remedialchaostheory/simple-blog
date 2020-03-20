@@ -5,7 +5,10 @@ class Blog:
         self.posts = []
 
     def __repr__(self):
-        return f'{self.title} by {self.author} ({len(self.posts)} posts)'
+        return (
+            f'{self.title} by {self.author} '
+            f'({len(self.posts)} post{"s" if len(self.posts) != 1 else ""})'
+            )
 
     def create_post(self, title, content):
         pass
