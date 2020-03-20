@@ -1,6 +1,6 @@
-Simple blog app
+# Simple blog
 
-## Types of testing implemented
+### Types of testing implemented
 - Unit
 - Integration
 - System
