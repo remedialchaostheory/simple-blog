@@ -19,43 +19,43 @@ class BlogTest(TestCase):
                 'title': 'Test',
                 'author': 'Test Author',
                 'posts': []
-                }
-            )
+            }
+        )
 
     def test_json_multiple_posts(self):
         b = Blog('Test', 'Test Author')
         b.create_post('Test Title', 'Test')
 
-        self.assertDictEqual(
-            b.json(), {
-                'title': 'Test',
-                'author': 'Test Author',
-                'posts': [{
-                    'title': 'Test Title',
-                    'content': 'Test'
-                    }]
-                }
-            )
+        expected = {
+            'title': 'Test',
+            'author': 'Test Author',
+            'posts': [{
+                'title': 'Test Title',
+                'content': 'Test'
+            }]
+        }
+
+        self.assertDictEqual(b.json(), expected)
 
         b2 = Blog('My Days', 'Julie')
         b2.create_post('Test', 'Another post')
         b2.create_post('Test 2', 'Revenge of the post')
 
-        self.assertDictEqual(
-            b2.json(), {
-                'title':
-                'My Days',
-                'author':
-                'Julie',
-                'posts': [
-                    {
-                        'title': 'Test',
-                        'content': 'Another post'
-                        },
-                    {
-                        'title': 'Test 2',
-                        'content': 'Revenge of the post'
-                        },
-                    ]
-                }
-            )
+        expected2 = {
+            'title':
+            'My Days',
+            'author':
+            'Julie',
+            'posts': [
+                {
+                    'title': 'Test',
+                    'content': 'Another post'
+                },
+                {
+                    'title': 'Test 2',
+                    'content': 'Revenge of the post'
+                },
+            ]
+        }
+
+        self.assertDictEqual(b2.json(), expected2)
