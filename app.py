@@ -48,23 +48,23 @@ def print_blogs():
 
 
 def ask_create_blog():
-    blog_title = input('What is your blog\'s title?')
-    blog_author = input('What is your name?')
-    new_blog = Blog(blog_title, blog_author)
-    blogs[blog_title] = new_blog
+    title = input('What is your blog\'s title?\n')
+    author = input('What is your name?\n')
+    new_blog = Blog(title, author)
+    blogs[title] = new_blog
     print('Thanks! You\'re blog is now created')
     return new_blog
 
 
 def ask_read_blog():
-    blog_title = input('Which blog would you like to read?')
+    blog_title = input('Which blog would you like to read?\n')
     posts = blogs[blog_title].posts
     for post in posts:
         print(post)
 
 
 def ask_create_post():
-    post_title = input('What is your post title?')
-    post_content = input('What is your post content?')
+    post_title = input('What is your post title?\n')
+    post_content = input('What is your post content?\n')
     new_post = Post(post_title, post_content)
     return new_post
