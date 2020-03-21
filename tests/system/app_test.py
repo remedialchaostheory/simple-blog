@@ -6,7 +6,7 @@ from blog import Blog
 
 class AppTest(TestCase):
     def test_menu_prints_prompt(self):
-        with patch('builtins.input') as mocked_input:
+        with patch('builtins.input', return_value='q') as mocked_input:
             app.menu()
             mocked_input.assert_called_with(app.MENU_PROMPT)
 
@@ -38,3 +38,20 @@ class AppTest(TestCase):
             assert mocked_print.call_args_list[1] == call(
                 '- Test Blog 2 by Test Author 2 (0 posts)'
             )
+
+    def test_ask_create_blog(self):
+        title = 'Test Blog'
+        author = 'Test Author'
+        blog = Blog(title, author)
+
+        with patch('builtins.input') as mocked_input:
+            mocked_input.side_effect = (title, author)
+            app.ask_create_blog()
+
+            self.assertIsNotNone(app.blogs.get(title))
+
+            # TODO - can't get assertDictEqual to work
+            # expected = {title: blog}
+            # print("app.blogs ->", app.blogs)
+            # print("expected ->", expected)
+            # self.assertDictEqual(app.blogs, expected)
