@@ -52,15 +52,27 @@ def ask_create_blog():
     author = input('What is your name?\n')
     new_blog = Blog(title, author)
     blogs[title] = new_blog
-    print('Thanks! You\'re blog is now created')
-    return new_blog
+    print('Thanks! Your blog is now created')
 
 
 def ask_read_blog():
     blog_title = input('Which blog would you like to read?\n')
-    posts = blogs[blog_title].posts
-    for post in posts:
-        print(post)
+    blog = blogs[blog_title]
+    print_posts(blog)
+
+
+def print_post(post):
+    print(f'''
+-- {post.title} --
+
+{post.content}
+
+    ''')
+
+
+def print_posts(blog):
+    for post in blog.posts:
+        print_post(post)
 
 
 def ask_create_post():
