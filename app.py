@@ -64,4 +64,7 @@ def ask_read_blog():
 
 
 def ask_create_post():
-    pass
+    post_title = input('What is your post title?')
+    post_content = input('What is your post content?')
+    new_post = Post(post_title, post_content)
+    return new_post
