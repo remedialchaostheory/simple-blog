@@ -2,6 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch, call
 import app
 from blog import Blog
+from post import Post
 
 
 class AppTest(TestCase):
@@ -14,6 +15,7 @@ class AppTest(TestCase):
         with patch('app.print_blogs') as mocked_print_blogs:
             with patch('builtins.input', return_value='q'):
                 app.menu()
+                # TODO - why is this not called w anything ?
                 mocked_print_blogs.assert_called()
 
     def test_print_blogs(self):
@@ -55,3 +57,12 @@ class AppTest(TestCase):
             # print("app.blogs ->", app.blogs)
             # print("expected ->", expected)
             # self.assertDictEqual(app.blogs, expected)
+
+    def test_ask_read_blog(self):
+        title = 'Test Blog'
+        blog = Blog(title, 'Test Author')
+        app.blogs = {title: blog}
+        with patch('builtins.input', return_value=title):
+            with patch('app.print_posts') as mocked_print_posts:
+                app.ask_read_blog()
+                mocked_print_posts.assert_called_with(blog)
