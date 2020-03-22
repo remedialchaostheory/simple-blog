@@ -75,3 +75,11 @@ class AppTest(TestCase):
         with patch('app.print_post') as mocked_print_post:
             app.print_posts(blog)
             mocked_print_post.assert_called_with(blog.posts[0])
+
+    def test_print_post(self):
+        post = Post('Test Title', 'Test Content')
+        with patch('builtins.print') as mocked_print_post:
+            app.print_post(post)
+            mocked_print_post.assert_called_with(
+                app.POST_TEMPLATE.format(post.title, post.content)
+            )
