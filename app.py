@@ -77,8 +77,12 @@ def print_post(post):
 
 
 def ask_create_post():
+    blog_title = input('Which blog?\n')
     post_title = input('What is your post title?\n')
     post_content = input('What is your post content?\n')
+
     new_post = Post(post_title, post_content)
-    # blog = blogs[]
+    blog = blogs[blog_title]
+    blog.create_post(post_title, post_content)
+
     return new_post
