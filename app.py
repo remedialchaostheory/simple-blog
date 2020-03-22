@@ -2,6 +2,12 @@ from blog import Blog
 from post import Post
 
 MENU_PROMPT = 'Enter "c" to create a blog, "l" to list blogs, "r" to read one, "p" to create a post, or "q" to quit'
+POST_TEMPLATE = '''
+-- {} --
+
+{}
+
+'''
 
 blogs = dict()  # blog_name : blog object
 
@@ -61,22 +67,18 @@ def ask_read_blog():
     print_posts(blog)
 
 
-def print_post(post):
-    print(f'''
--- {post.title} --
-
-{post.content}
-
-    ''')
-
-
 def print_posts(blog):
     for post in blog.posts:
         print_post(post)
+
+
+def print_post(post):
+    print(POST_TEMPLATE.format(post.title, post.content))
 
 
 def ask_create_post():
     post_title = input('What is your post title?\n')
     post_content = input('What is your post content?\n')
     new_post = Post(post_title, post_content)
+    # blog = blogs[]
     return new_post
