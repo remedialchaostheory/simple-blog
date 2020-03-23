@@ -11,12 +11,49 @@ class AppTest(TestCase):
             app.menu()
             mocked_input.assert_called_with(app.MENU_PROMPT)
 
-    def test_menu_calls_print_blogs(self):
-        with patch('app.print_blogs') as mocked_print_blogs:
-            with patch('builtins.input', return_value='q'):
+    def test_menu_calls_print_blogs_before_menu_prompt(self):
+        with patch('builtins.input', return_value='q'):
+            with patch('app.print_blogs') as mocked_print_blogs:
                 app.menu()
                 # TODO - why is this not called w anything ?
                 mocked_print_blogs.assert_called()
+
+    def test_menu_calls_ask_create_blog(self):
+        with patch('builtins.input') as mocked_input:
+            blog_title = 'Test Blog'
+            mocked_input.side_effect = ('c', blog_title, 'Test Author', 'q')
+            app.menu()
+            self.assertIsNotNone(app.blogs[blog_title])
+
+    def test_menu_calls_print_blogs(self):
+        with patch('builtins.input') as mocked_input:
+            mocked_input.side_effect = ('l', 'q')
+            with patch('app.print_blogs') as mocked_print_blogs:
+                app.menu()
+                mocked_print_blogs.assert_called()
+
+    def test_menu_calls_ask_read_blog(self):
+        blog_title = 'Test Blog'
+        with patch('builtins.input') as mocked_input:
+            mocked_input.side_effect = ('r', blog_title, 'q')
+            app.menu()
+            self.assertIsNotNone(app.blogs[blog_title])
+
+        with patch('builtins.input') as mocked_input:
+            with patch('app.ask_read_blog') as mocked_ask_read_blog:
+                mocked_input.side_effect = ('r', blog_title, 'q')
+                app.menu()
+                mocked_ask_read_blog.assert_called()
+
+    def test_menu_calls_ask_create_post(self):
+        with patch('builtins.input') as mocked_input:
+            blog_title = 'Test Blog'
+            mocked_input.side_effect = (
+                'p', blog_title, 'Test Post', 'Test Content', 'q'
+            )
+            app.menu()
+            blog = app.blogs[blog_title]
+            self.assertGreater(len(blog.posts), 0)
 
     def test_print_blogs(self):
         blog = Blog('Test Blog', 'Test Author')
